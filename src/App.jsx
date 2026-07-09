@@ -7,10 +7,10 @@ function CrossScene({ onLightChange }) {
   const onLightChangeRef = useRef(onLightChange);
   onLightChangeRef.current = onLightChange;
 
-  useEffect(() => {
+    useEffect(() => {
     const mount = mountRef.current;
-    const width = mount.clientWidth;
-    const height = mount.clientHeight;
+    const width = mount.clientWidth || mount.getBoundingClientRect().width || 300;
+    const height = mount.clientHeight || mount.getBoundingClientRect().height || 300;
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(38, width / height, 0.1, 100);
@@ -279,21 +279,27 @@ function CrossScene({ onLightChange }) {
     };
     animate();
 
-    const handleResize = () => {
+        const handleResize = () => {
       const w = mount.clientWidth, h = mount.clientHeight;
+      if (w === 0 || h === 0) return;
       camera.aspect = w / h;
       camera.updateProjectionMatrix();
       renderer.setSize(w, h);
     };
     window.addEventListener('resize', handleResize);
 
+    const resizeObserver = new ResizeObserver(() => handleResize());
+    resizeObserver.observe(mount);
+
     return () => {
       cancelAnimationFrame(frameId);
       window.removeEventListener('resize', handleResize);
+      resizeObserver.disconnect();
       mount.removeChild(renderer.domElement);
       renderer.dispose();
     };
   }, []);
+
 
   return <div ref={mountRef} style={{ width: '100%', height: '100%' }} />;
 }
