@@ -544,7 +544,14 @@ function VisitForm() {
 function ResponsiveStyles() {
   return (
     <style>{`
-      html, body { overflow-x: hidden; max-width: 100%; }
+      html, body {
+  overflow-x: hidden;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  background: #1a1410;
+}
+
       * { box-sizing: border-box; }
       section[id] { scroll-margin-top: 84px; }
       @keyframes rt-blink { 0%, 50% { opacity: 1; } 50.01%, 100% { opacity: 0; } }
