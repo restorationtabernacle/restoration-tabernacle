@@ -87,6 +87,18 @@ function CrossScene({ onLightChange }) {
     rim.position.set(-4, 2, 3);
     scene.add(rim);
 
+    const crossKey = new THREE.DirectionalLight(0xfff0d8, 0.9);
+    crossKey.position.set(2.2, 3, 3.5);
+    crossKey.castShadow = true;
+    crossKey.shadow.mapSize.set(1024, 1024);
+    scene.add(crossKey);
+    scene.add(crossKey.target);
+
+    const crossFill = new THREE.DirectionalLight(0x6a7a9a, 0.25);
+    crossFill.position.set(-2.5, 1, -2);
+    scene.add(crossFill);
+
+
     // ---- Cross: rough-hewn, asymmetric timber look ----
     const crossGroup = new THREE.Group();
     scene.add(crossGroup);
@@ -120,6 +132,10 @@ function CrossScene({ onLightChange }) {
     crossGroup.add(crossbar);
 
     crossGroup.position.set(0, -1.1, -1.5);
+
+    crossKey.target.position.copy(crossGroup.position);
+    crossKey.target.updateMatrixWorld();
+
 
     // ---- Birds: a few simple V-shapes drifting across the dawn sky ----
     const birdMat = new THREE.MeshBasicMaterial({ color: 0x1a1310, side: THREE.DoubleSide });
