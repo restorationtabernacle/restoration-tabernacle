@@ -91,7 +91,8 @@ function CrossScene({ onLightChange }) {
     const crossGroup = new THREE.Group();
     scene.add(crossGroup);
 
-    const woodMat = new THREE.MeshStandardMaterial({ color: 0x2b1e14, roughness: 0.95, metalness: 0.02 });
+    const woodMat = new THREE.MeshStandardMaterial({ color: 0x8a5a30, roughness: 0.7, metalness: 0.08 });
+
 
     function timberBox(w, h, d) {
       const geo = new THREE.BoxGeometry(w, h, d, 2, 2, 2);
